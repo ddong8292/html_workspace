@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>퍼즐조각</title>
+<script>
+//프로그램이 가동되자 마자 백그라운드가 노란색인 div를 생성 및 추가하기
+var stage;
+window.addEventListener("load", function(){
+	var stage=document.createElement("div");
+	stage.style.width="800px";
+	stage.style.height="800px";
+	stage.style.backgroundImage="url('../images/kim.jpg')";
+	stage.style.margin="auto";
+	document.body.appendChild(stage);
+	//연예인 사진 배경으로 지정하기
+	
+});
+
+//다량의 div를 생성하기
+function createBox(){
+	
+}
+	
+
+
+
+</script>
+
+</head>
+<body>
+</body>
+</html>

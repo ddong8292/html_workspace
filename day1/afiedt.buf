@@ -1,0 +1,5 @@
+create user java
+identified by java
+default tablespace firstspace
+quota unlimited on firstspace
+/

@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Document</title>
+<style>
+#big{
+	 width:1000px;
+	 height:700px;
+	 margin:auto;
+}
+#le{
+	width:200px;
+	height:700px;
+	background:#ccccff;
+	float:left;
+	text-align:center;
+}
+#ri{
+	width:700px;
+	height:700px;
+	background:#cccccc;
+	float:left;
+}
+</style>
+</head>
+<script>
+var big;
+var m_id;
+var m_pw;
+var m_na;
+var m_m;
+var m_but;
+
+window.addEventListener("load", function(){
+	init();
+});
+function init(){;
+
+	m_id=document.getElementById("m_id");
+	m_pw=document.getElementById("m_pw");
+	m_na=document.getElementById("m_na");
+	m_m=document.getElementById("m_m");
+	m_but=document.getElementById("m_but");
+
+	m_but.addEventListener("click", function(){
+			if(m_id.value==""){
+				 alert("아이디를 입력하세요");
+				 m_but.focus();
+				 return;
+			}else if(m_pw.value==""){
+				alert("패스워드를 입력하세요")
+				m_pw.focus();
+				return;
+			}else if(m_na.value==""){
+				alert("이름을 입력하세요")
+				m_na.focus();
+				return;
+			}else if(m_m.value==""){
+				alert("돈을 입력하세요")
+				m_m.focus();
+				return;
+			}
+	})
+}
+
+</script>
+<body>
+<div id="big">
+	<div id="le"><br>
+	ID<input type="text" size="8" id="m_id"><br>
+	PW<input type="password" size="8" id="m_pw"><br>
+	NAME<input type="text" size="8" id="m_na"><br>
+	MONEY<input type="text" size="8" id="m_m"><br>
+	<input type="button" value="등록" id="but"></div>
+	<div id="ri" >
+	</div>
+</div>
+</body>
+</html>

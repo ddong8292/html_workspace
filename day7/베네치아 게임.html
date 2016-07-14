@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>부드러운 움직임</title>
+<style>
+#wrapper{
+	width:1000px;
+	height:800px;
+	background: yellow;
+	border:3px solid black;
+	margin:auto;
+}
+#stage{
+	width:100%;
+	height:650px;
+	background-image:url("../images/back.jpg")
+
+}
+#contlloer{
+	width:100%;
+	height:150px;
+	background: gray;
+	text-align:center;
+}
+#hp{
+	width:176px;
+	height:150px;
+	/*background:gray;*/
+	float:left;
+}
+#info{
+	width:400px;
+	height:150px;
+	/*background:gray;*/
+	float:left;
+}
+#keyword{
+	width:250px;
+	height:50px;
+	background:white;
+	font-size:30pt;
+}
+</style>
+<script>
+var word=[
+	"핸드폰",
+	"컴퓨터",
+	"마우스",
+	"키보드",
+	"모니터",
+	"스피커",
+	"이름표",
+	"책",
+	"가방",
+	"이어폰"
+];
+var hp;
+var floorArray=new Array(3);//층수 배열
+var stage;
+var wordArray=new Array(word.length);
+var step=10;//몇 픽셀씩 내려오게 할지 결정하는 변수
+var st;//셋타임 아웃을 가리키는 변수
+var keyword;//단어 입력폼
+var score;//점수 텍스트박스
+var jumsu=0;
+var limit;//단어들이 넘지말아야할 y축의 한계점.
+/*alert("wordArray의 길이는"+wordArray.length);*/
+function init(){
+	hp=document.getElementById("hp");
+	stage=document.getElementById("stage");
+	keyword=document.getElementById("keyword");
+	score=document.getElementById("score");
+	
+	//현재 stage의 height를 구해보자!
+	//alert("높이"+stage.style.height);
+	limit=parseInt(stage.style.height);
+	
+	createHP();	//체력 생성 보여주기
+	createTag();	//단어 생성 보여주기
+}
+
+//테이블 생성
+function createHP(){
+
+	//문서가 로드되면 hp를 표현하는 테이블을 3*4개로 구성해본다
+	table=document.createElement("table");
+	table.style.border="2px solid black";
+
+	for(var a=0;a<3;a++){
+		var tr=document.createElement("tr");
+		
+		var hoArray=new Array(4);//호수 배열
+
+		for(i=0;i<4;i++){
+			var td=document.createElement("td");
+			td.style.width=50+"px";
+			td.style.height=45+"px";
+			td.style.background="white";
+			tr.appendChild(td);
+
+			hoArray[i]=td;
+		}
+
+		//한줄이 완성되었으므로, 큰 상자에 담자
+		floorArray[a]=hoArray;
+
+		//테이블 조립하기
+		table.appendChild(tr);
+	}
+	//hp div에 table 추가
+	hp.appendChild(table);
+	
+}
+function test(){
+	floorArray[2][2].style.background="red";
+}
+
+/*게임이 시작되면, 단어들이 등장하되 점점내려오게.(top값이 증가)*/
+function gameStart(){
+	
+	drop();
+	keyword.focus();
+}
+
+function createTag(){
+	//span태그를 단어만큼 생성하여 stage에 부착하자
+	for(var i=0; i<word.length;i++ ){
+		
+		//랜덤값 구하기:0~~99사이에서.
+		var r=parseInt(Math.random()*100); //0.xxx 난수 발생
+		console.log(r)
+		var span=document.createElement("span");
+		span.style.position="relative";
+		span.style.left=(50*i)+"px";
+		span.style.top=-r+"px";
+		span.innerText=word[i];
+		stage.appendChild(span);
+
+		//span 지역변수이기 때문에, 추후 for문이 다 돌아간 후에는
+		//접근할수 없다. 따라서 전역 배열에 담아둬야 한다.
+		wordArray[i]=span;
+	}
+	
+}
+//텍스트 내려오는 효과
+function drop(){
+	for(var a=0; a<wordArray.length;a++){
+	wordArray[a].style.top=parseInt(wordArray[a].style.top)+step+"px";
+	}
+	//현재 내려오고 있는 단어가 limit를 넘어섰는지 조사
+	if(parseInt(wordArray[0].style.top)>=limit-40){
+		floorArray[0][0].style.background="red";
+	
+	}
+	
+	var level=document.getElementById("speed").value;
+	console.log("현재 레벨값은"+level);
+	st=setTimeout("drop()", level);
+}
+
+//게임 잠시 중지
+function pause(){
+	clearTimeout(st);//멈춤의 대상이 되는 setTimeout 인수로
+}
+//여러 키보드 값중 엔터키값에만 반응을 보이자
+function enter(){
+	if(event.keyCode==13){
+		//alert("엔터");
+		
+		//현재 존재하는 단어마다 입력한 값과 비교를 한다
+		//같으면? 단어는 사라지고, 점수 올리고.
+		for(var i=0;i<word.length;i++){
+			if(wordArray[i].innerText == keyword.value){
+				//alert("맞네요");
+				wordArray[i].innerText="";
+				keyword.value="";//방금 입력한 텍스트 지우기
+				//기존 점수보다 10점 올리기
+				jumsu+=10;
+				score.value=jumsu;
+
+			}
+		}
+	}
+}
+</script>
+</head>
+<body onLoad="init()">
+	<div id="wrapper">
+		<div id="stage" style="height:650px"></div>
+		<div id="contlloer">
+			<div id="info">
+			<select id="speed">
+				<option value="1500">1단계</option>
+				<option value="1200">2단계</option>
+				<option value="900">3단계</option>
+				<option value="500">4단계</option>
+				<option value="200">5단계</option>
+			</select>
+			<input type="button" value="Start" onClick="gameStart()">
+			<input type="button" value="Pause" onClick="pause()">
+			<input type="text" value="0" size="5" id="score">점<br>
+			<input type="text" id="keyword" onKeyUP="enter()">
+			</div>
+			<div id="hp"></div>
+		</div>
+	</div>
+</body>
+</html>
