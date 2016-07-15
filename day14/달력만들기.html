@@ -5,7 +5,7 @@
 <title>달력만들기</title>
 <style>
 #wrapper{
-	width:704px;
+	width:724px;
 	height:800px;
 	border:1px solid black;
 	margin:auto;
@@ -18,7 +18,7 @@
 #dayTitle{
 	width:100%;
 	height:30px;
-	background:#ccffcc;
+	background:#ccff99;
 }
 ul{
 	list-style:none;
@@ -28,41 +28,84 @@ ul li{
 	float:left;
 	width:100px;
 }
+select{
+	width:200px;
+	height:40px;
+	background:#00cccc;
+	color:#ffffff;
+	font-size:15pt;
+}
 </style>
+<script src="../lib/lib.js"></script>
 <script src="../lib/DateBox.js"></script>
 <script>
 var down;
 var sel_yy;
 var sel_mm;
-
+var sel_dd;
+var dayName=["일요일","월요일","화요일","수요일","목요일","금요일","토요일"];
 
 window.addEventListener("load", function(){
 	init();
-});
+});	
+
 function init(){
 	down=document.getElementById("down");
+
 	sel_yy=document.getElementById("sel_yy");
 	sel_mm=document.getElementById("sel_mm");
 	sel_dd=document.getElementById("sel_dd");
-
-	//최대 42개의 날자박스를 생성한다
-	for(var i=1;i<=42;i++){
-		var box = new DateBox(down, 100,100,i);
-		box.init();
-	}
-}
-function date_sel(){
-		for(var i=1990; i<=2030; i++){
+	
+	//년도 생성 
+	for(var i=1990; i<=2030;i++){
 		var op=document.createElement("option");
 		op.text=i;
 		sel_yy.add(op);
 	}
-	
-	for(var i=1; i<=12; i++){
+	//월 생성 
+	for(var i=1; i<=12;i++){
 		var op=document.createElement("option");
 		op.text=i;
 		sel_mm.add(op);
 	}
+
+	createBox();
+}
+
+//기존에 출력된 달력을 모두 지운다!!
+function deleteBox(){
+	down.innerText="";
+}
+
+//달력 생성
+function createBox(){
+	//현재 selectBox에 선택한 값에 의한 날짜 정보 셋팅
+	var d=new Date(sel_yy.value+"-"+sel_mm.value+"-1");
+	//console.log(d);
+
+	//console.log(d.getDay()+"번째는"+dayName[d.getDay()])//현재 요일을 구한다!0~6
+
+	//최대 42개의 날짜 박스를 생성한다!!
+
+	var n=0;
+	var lastDate=getLastDate(sel_yy.value, sel_mm.value);
+	
+	for(var i=1;i<=42;i++){
+		if(i>d.getDay() && n <lastDate){//해당 요일의 index부터 날짜를 증가시킨다
+			n++;
+			var box = new DateBox(down, 100,100,n);
+			box.init();
+		
+		}else{
+			var box = new DateBox(down, 100,100,"");
+			box.init();
+		}
+	}
+}
+//down 영역에 선택한 날짜에 해당하는 달력이 출력!!
+function showCal(){
+	deleteBox();
+	createBox();
 
 }
 </script>
@@ -72,7 +115,7 @@ function date_sel(){
 	<div id="up">
 		<select id="sel_yy"></select>년도
 		<select id="sel_mm"></select>월
-		<input type="button" value="검색">
+		<input type="button" value="검색" onClick="showCal()">
 	</div>
 	<div id="dayTitle">
 		<ul>
