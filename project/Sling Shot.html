@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Sling Shot</title>
+<style>
+body{
+	margin:0px;
+}
+#stage{
+	width:100%;
+	height:900px;
+	background:url("../Pro/bg.png");
+	background-repeat: no-repeat;
+}
+
+</style>
+<script>
+var mouseX=0;
+var mouseY=0;
+var sp=0;
+var b;
+window.addEventListener("load", function(){
+	spin();
+});
+
+function spin(){
+	var a=event.clientX;
+	if(a<b){
+		sp+=10
+	}else if(a>b){
+		sp-=10
+	}else if(a<300){
+		sp=sp;
+	}else if(a>900){
+		sp=sp;
+	}
+	document.getElementById("stone").style.transform="rotate("+sp+"deg)";
+	b=a;
+
+}
+
+</script>
+</head>
+<body>
+	<div id="stage" onMouseMove="spin()">
+		
+		<img src="../pro/stone1.png" id="stone">
+	</div>
+</body>
+</html>
