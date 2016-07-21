@@ -10,42 +10,83 @@ body{
 #stage{
 	width:100%;
 	height:900px;
-	background:url("../Pro/bg.png");
-	background-repeat: no-repeat;
+	background:url("./images/bg.png");
+	
 }
-
+#box{
+	width:400px;
+	height:30px;
+	position:relative;
+	background:yellow;
+	top:650px;
+	margin:auto;
+}
 </style>
+<script src="./lib/Target.js"></script>
+<script src="./lib/Point.js"></script>
 <script>
-var mouseX=0;
-var mouseY=0;
-var sp=0;
-var b;
+var stage;
+var target;
+var enemyArray=new Array();
+var img=["./images/tr7.png", "./images/tr6.png"];
+var point;
+var box;
+
+
 window.addEventListener("load", function(){
-	spin();
+	init();
 });
 
-function spin(){
-	var a=event.clientX;
-	if(a<b){
-		sp+=10
-	}else if(a>b){
-		sp-=10
-	}else if(a<300){
-		sp=sp;
-	}else if(a>900){
-		sp=sp;
-	}
-	document.getElementById("stone").style.transform="rotate("+sp+"deg)";
-	b=a;
+function init(){
+	stage=document.getElementById("stage");
+	target=document.getElementById("target");
+	box=document.getElementById("box");
+	console.log(box.style);
+	start();
+	point=new Point(stage, 25,25, 0,0,"./images/point.png",box);
+	point.init();
+};
+function start(){
+	//document.write(parseInt(Math.random()*10));
 
+	var r=parseInt(Math.random()*10); //몇번째 for문의 병을 특별한 병으로 할지를 결정하는 랜덤값..
+	var tr;
+
+	for(var i=0; i<10; i++){
+		if(i==r){
+			tr=img[1]; //특수한 병
+		}else{
+			tr=img[0]; //그냥 병
+		}
+		target=new Target(stage, 70, 100, 1000-(i*90), 50, tr);
+		enemyArray.push(target);
+		
+		target.init();
+
+	}
 }
+window.addEventListener("keydown",function(){
+	var key=event.keyCode;
+	switch(key){
+		case 37:point.velX=-5; break;
+		case 39:point.velX=5; break;
+		case 32:shot(); break;
+	}
+});
+window.addEventListener("keyup", function(){
+	var key=event.keyCode;
+	if(key==37||key==39){
+		point.velX=0;
+	}
+
+});
+
 
 </script>
 </head>
 <body>
-	<div id="stage" onMouseMove="spin()">
-		
-		<img src="../pro/stone1.png" id="stone">
+	<div id="stage">
+		<div id="box"></div>
 	</div>
 </body>
 </html>
