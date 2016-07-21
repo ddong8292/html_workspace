@@ -1,0 +1,7 @@
+
+
+배트맨 번호를 바꾸자
+update student set pwd='1111' where id='batman';
+
+배트맨을 지우자
+delete from student where id='batman';
