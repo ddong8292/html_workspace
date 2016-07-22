@@ -26,7 +26,7 @@ var targetArray=new Array();
 var img=["./images/tr7.png", "./images/tr6.png"];
 var point;
 var dart;
-
+var fireFlag=true;
 
 window.addEventListener("load", function(){
 	init();
@@ -74,9 +74,12 @@ window.addEventListener("keyup", function(){
 
 });
 function shot(){
-	dart=new Dart(stage, 20, 80,point.x-30,point.y-50,"./images/dart.png")
-	dart.init();
-	console.log(point.y-50);
+	if(fireFlag){
+		dart=new Dart(stage, 20, 80,point.x,point.y-50,"./images/dart.png");
+
+		dart.init();
+	}
+	fireFlag=false;	
 }
 
 
