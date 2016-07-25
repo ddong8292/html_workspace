@@ -9,6 +9,9 @@ var Point=function(stage, width, height,x,y,src){
 	this.velX=0;
 	this.velY=0;
 	this.flag=true;
+	this.speedCount=0;
+	this.runnig=false;
+
 
 	this.init=function(){
 		this.img=document.createElement("img");
@@ -23,6 +26,22 @@ var Point=function(stage, width, height,x,y,src){
 		
 		this.move();
 	}
+	this.action=function(){
+		if(this.running){
+			this.speedCount++;
+
+			if(this.speedCount%50==0){
+				actionCount++; 
+				if(actionCount > actionArray.length-1){
+					actionCount=0;
+				}
+			}
+			this.img.src=actionArray[actionCount];
+		}else{
+			this.img.src=actionArray[0]; 
+		}
+	}
+
 	this.move=function(){
 		var me=this;	
 		this.x+=this.velX;
@@ -33,6 +52,8 @@ var Point=function(stage, width, height,x,y,src){
 			this.x=700;
 		}
 		this.img.style.left=this.x+"px";
+		
+		this.action();
 		setTimeout(function(){
 			me.move();	
 		}, 5);

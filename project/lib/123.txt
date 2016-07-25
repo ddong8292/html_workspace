@@ -1,0 +1,40 @@
+1.객체 정의
+var target = function(stage, width, height, x, y, isLast){
+....
+this.isLast = isLast
+}
+
+2.객체 초기화(객체 생성)
+
+var t = new targer(stage, width, height, x, y , 마지막이 아닐 땐 false 마지막인경우 true);
+
+
+3.총알이 타겟과 hitTest의 반환 값이 true인 경우에 타겟이 마지막 타겟인지 비교
+var numOfRestTaget = 남은 타겟의 갯수를 반환하는 함수();
+히트가 마지막 타겟과 이루어졌을 경우
+if(target.isLast == true){
+   if(numOfRestTarget = 1){
+      clearTimeout(총알);
+      clearTimeout(타겟);
+      removeChilde(총알);
+      removeChilde(타겟);
+      다음 스테이지로 가는 함수();
+   }else{
+      게임오버 함수();
+   }
+}else{히트가 마지막타겟이 아닌경우
+   clearTimeout(총알);
+   clearTimeout(타겟);
+   removeChilde(총알);
+   removeChilde(타겟);
+}
+
+4. 남은 타겟을 반환하는 함수
+function getNumOfRestTarget(){
+   var count = 0;
+   for(var i=0; i<targetArr.length; ++i){
+      if(targetArr[i] == undefined)
+         count++;
+   }
+   return count;
+}

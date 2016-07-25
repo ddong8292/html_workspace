@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Sling Shot</title>
+<style>
+body{
+	margin:0px;
+}
+#wrapper{
+	width:1250px;
+	height:900px;
+	
+}
+#stage{
+	width:100%;
+	height:99%;
+	background:url("./images/bg.png");
+	background-repeat:no-repeat;
+}	
+#top{
+	width:100%;
+	height:653px;
+
+}
+#bottom{
+	width:100%
+	height:246px;
+}
+#info{
+	width:800px;
+	height:246px;
+	float:left;
+
+}
+#hp{
+	width:100px;
+	height:246px;
+	float:left;
+	
+}
+
+</style>
+
+<script src="./lib/lib.js"></script>
+<script src="./lib/Dart.js"></script>
+<script src="./lib/Target.js"></script>
+<script src="./lib/Point.js"></script>
+<script>
+var stage;
+var target;
+var targetArray=new Array();
+var img=["./images/tr7.png", "./images/tr6.png"];
+var point;
+var dart;
+var fireFlag=true;
+var floorArray=new Array();
+var table;
+var r=parseInt(Math.random()*10); //몇번째 for문의 병을 특별한 병으로 할지를 결정하는 랜덤값..
+var tr;
+var img2;
+var actionArray=["./images/11.png","./images/22.png","./images/33.png"];
+var step=0;
+var actionCount=0;
+var key;
+
+window.addEventListener("load", function(){
+	init();
+});
+
+function init(){
+	stage=document.getElementById("stage");
+	target=document.getElementById("target");
+	hp=document.getElementById("hp")
+	
+	
+	start();
+	point=new Point(stage, 100,100, 650,650,"./images/11.png");
+	point.init();
+	createHp();
+};
+function start(){
+	//document.write(parseInt(Math.random()*10));
+	
+
+	for(var i=0; i<10; i++){
+		if(i==r){
+			tr=img[1]; //특수한 병
+		}else{
+			tr=img[0]; //그냥 병
+		}
+		target=new Target(stage, 70, 70, 1000-(i*90), 50, tr);
+		targetArray.push(target);
+		target.init();
+
+	}
+}
+function createHp(){
+		
+	table=document.createElement("table");
+	
+	
+	for(var i=0; i<3; i++){
+		
+		var tr=document.createElement("tr");
+		var hoArray=new Array(4);
+		
+		for(var a=0; a<=3; a++){
+			var td=document.createElement("td");
+			img=document.createElement("img");
+			img.src="./images/dart3.png"
+			td.style.width=82+"px";
+			td.style.height=26+"px";
+			td.appendChild(img);
+			tr.appendChild(td);
+			hoArray[a]=td;
+		}
+		floorArray[i]=hoArray;
+		table.appendChild(tr);
+	}	
+	hp.appendChild(table);
+	td.removeChild(floorArray[0][1]);
+}
+window.addEventListener("keydown",function(){
+	key=event.keyCode;
+	switch(key){
+		case 37:point.velX=-2; break;
+		case 39:point.velX=2; break;
+		case 32:shot(); break;
+	}
+});
+window.addEventListener("keyup", function(){
+	key=event.keyCode;
+	if(key==37||key==39){
+		point.velX=0;
+
+	}
+
+});
+function shot(){
+	
+	point.running=true;
+
+		if(fireFlag){
+			dart=new Dart(stage, 20, 80,point.x+10,point.y-30,"./images/dart.png");
+
+			dart.init();
+		}
+		fireFlag=false;	
+		
+		console.log(floorArray[0][0]);
+	
+		
+}
+
+
+
+
+
+</script>
+</head>
+<body>
+	<div id="wrapper">
+		<div id="stage">
+			<div id="top"></div>
+			<div id="bottom">
+				<div id="info"></div>
+				<div id="hp"></div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

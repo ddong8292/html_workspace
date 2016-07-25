@@ -6,15 +6,43 @@
 <style>
 body{
 	margin:0px;
+	background:black;
+}
+#wrapper{
+	width:1250px;
+	height:900px;
+	
 }
 #stage{
 	width:100%;
-	height:900px;
+	height:99%;
 	background:url("./images/bg.png");
+	background-repeat:no-repeat;
+}	
+#top{
+	width:100%;
+	height:653px;
+
+}
+#bottom{
+	width:100%
+	height:246px;
+}
+#info{
+	width:800px;
+	height:246px;
+	float:left;
+
+}
+#hp{
+	width:100px;
+	height:246px;
+	float:left;
 	
 }
 
 </style>
+
 <script src="./lib/lib.js"></script>
 <script src="./lib/Dart.js"></script>
 <script src="./lib/Target.js"></script>
@@ -27,7 +55,21 @@ var img=["./images/tr7.png", "./images/tr6.png"];
 var point;
 var dart;
 var fireFlag=true;
-
+//var floorArray=new Array();
+var table;
+var r=parseInt(Math.random()*10); //몇번째 for문의 병을 특별한 병으로 할지를 결정하는 랜덤값..
+var tr;
+var img2;
+var actionArray=["./images/11.png","./images/22.png","./images/33.png"];
+var step=0;
+var actionCount=0;
+var key;
+var dartArray=new Array();
+var count=0;
+var dartCount=0;
+var targetCount=0;
+var stageCount=1;
+var st;
 window.addEventListener("load", function(){
 	init();
 });
@@ -35,16 +77,19 @@ window.addEventListener("load", function(){
 function init(){
 	stage=document.getElementById("stage");
 	target=document.getElementById("target");
-	
+	hp=document.getElementById("hp");
+	tr=document.getElementById("tr");
 	
 	start();
-	point=new Point(stage, 25,25, 650,650,"./images/point.png");
+	point=new Point(stage, 100,100, 650,650,"./images/11.png");
 	point.init();
+	createHp();
+	level();
 };
 function start(){
 	//document.write(parseInt(Math.random()*10));
-	var r=parseInt(Math.random()*10); //몇번째 for문의 병을 특별한 병으로 할지를 결정하는 랜덤값..
-	var tr;
+	
+	if(stageCount==1){
 
 	for(var i=0; i<10; i++){
 		if(i==r){
@@ -53,41 +98,161 @@ function start(){
 			tr=img[0]; //그냥 병
 		}
 		target=new Target(stage, 70, 70, 1000-(i*90), 50, tr);
+		target.stSpeed=10;
 		targetArray.push(target);
 		target.init();
+	}
+	
+	
+	}else if(stageCount==2){
+		for(var i=0; i<10; i++){
+			if(i==r){
+				tr=img[1]; //특수한 병
+			}else{
+				tr=img[0]; //그냥 병
+			}
+
+			target=new Target(stage, 70, 70, 1000-(i*90), 50, tr);
+			target.stSpeed=8;
+			targetArray.push(target);
+			target.init();
+		
+			dartCount=0;
+			targetCount=0;
+	}
+	}else if(stageCount==3){
+		for(var i=0; i<10; i++){
+			if(i==r){
+				tr=img[1]; //특수한 병
+			}else{
+				tr=img[0]; //그냥 병
+			}
+			target=new Target(stage, 70, 70, 1000-(i*90), 50, tr);
+			target.stSpeed=6;
+			targetArray.push(target);
+			target.init();
+		
+			dartCount=0;
+			targetCount=0;
+		}
+	}else if(stageCount==4){
+		for(var i=0; i<10; i++){
+			if(i==r){
+				tr=img[1]; //특수한 병
+			}else{
+				tr=img[0]; //그냥 병
+			}
+			target=new Target(stage, 70, 70, 1000-(i*90), 50, tr);
+			target.stSpeed=4;
+			targetArray.push(target);
+			target.init();
+		
+			dartCount=0;
+			targetCount=0;
+		}
+	}else if(stageCount==5){
+		for(var i=0; i<10; i++){
+			if(i==r){
+				tr=img[1]; //특수한 병
+			}else{
+				tr=img[0]; //그냥 병
+			}
+			target=new Target(stage, 70, 70, 1000-(i*90), 50, tr);
+			target.stSpeed=2;
+			targetArray.push(target);
+			target.init();
+		
+			dartCount=0;
+			targetCount=0;
+		}
 
 	}
 }
+function createHp(){
+	table=document.createElement("table");
+
+	var j=0;
+	for(var i=0; i<12; i++){
+		if(i%3==0)
+			j++;
+			//console.log(j);
+			var img=document.createElement("img");
+			img.style.top=600+j*30+"px";
+			img.style.left=800+(i%3)*85+"px";
+			
+			img.style.width=82+"px";
+			img.style.position="absolute";
+			img.style.height=26+"px";
+			img.src="./images/dart3.png"
+			dartArray.push(img);
+			hp.appendChild(img);
+		}
+	}
 window.addEventListener("keydown",function(){
-	var key=event.keyCode;
+	key=event.keyCode;
 	switch(key){
 		case 37:point.velX=-2; break;
 		case 39:point.velX=2; break;
 		case 32:shot(); break;
+
 	}
 });
 window.addEventListener("keyup", function(){
-	var key=event.keyCode;
+	key=event.keyCode;
 	if(key==37||key==39){
 		point.velX=0;
+
 	}
 
 });
 function shot(){
-	if(fireFlag){
-		dart=new Dart(stage, 20, 80,point.x,point.y-50,"./images/dart.png");
+	
+	point.running=true;
 
-		dart.init();
-	}
-	fireFlag=false;	
+		if(fireFlag){
+			dart=new Dart(stage, 20, 80,point.x+10,point.y-30,"./images/dart.png");
+			dart.init();
+		}
+		fireFlag=false;	
+
+		if(dartCount<=11){
+			hp.removeChild(dartArray[count++]);
+			dartCount++;
+		}
+			//console.log("dart"+dartCount);
+	
 }
+
+function level(){
+	 
+	if(dartCount-targetCount>3){
+		location.href="./images/end.jpg"
+		clearTimeout(st);
+		return;
+	}		
+	else if(targetCount==10){
+		//alert("다음");
+		stageCount++;
+		createHp();
+		count=stageCount*12-12;
+		start();		
+	}
+	st = setTimeout("level()", 100);
+}
+
 
 
 </script>
 </head>
 <body>
-	<div id="stage">
-		<div id="box"></div>
+	<div id="wrapper">
+		<div id="stage">
+			<div id="top"></div>
+			<div id="bottom">
+				<div id="info"></div>
+				<div id="hp"></div>
+			</div>
+		</div>
 	</div>
 </body>
 </html>

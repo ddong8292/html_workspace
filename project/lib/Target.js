@@ -1,4 +1,4 @@
-var Target=function(stage, width, height, x, y, src){
+var Target=function(stage, width, height, x, y, src, last){
 	this.stage=stage;
 	this.width=width;
 	this.height=height;
@@ -11,6 +11,8 @@ var Target=function(stage, width, height, x, y, src){
 	this.st;
 	this.flag=true;
 	var me=this;
+	this.last=last;
+	this.stSpeed=8;
 	this.init=function(){
 		
 	this.img=document.createElement("img");
@@ -44,7 +46,7 @@ var Target=function(stage, width, height, x, y, src){
 		this.img.style.top=this.y+"px";
 		this.st=setTimeout(function(){
 			me.move();
-		},30);
+		},this.stSpeed);
 	}
 }
 

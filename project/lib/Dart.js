@@ -34,6 +34,9 @@ var Dart=function(stage, width, height,x,y,src){
 			var result=hitTest(this.img, targetArray[i].img);
 			if(result){
 				//ÃÑ¾ËÁ×ÀÌ°í
+				targetCount++;
+				console.log("tar"+targetCount);
+				
 				fireFlag=true;
 				this.stage.removeChild(this.img);
 				clearTimeout(this.st);
@@ -42,10 +45,13 @@ var Dart=function(stage, width, height,x,y,src){
 				this.stage.removeChild(targetArray[i].img);
 				clearTimeout(targetArray[i].st);
 				delete targetArray[i];
-				}					
+	
+				}
 			}
 		}
+
 	}
+
 	this.move=function(){
 		this.y+=this.velY;
 		this.velY-=this.gravity;

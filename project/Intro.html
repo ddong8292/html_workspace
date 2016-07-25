@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+ <head>
+<meta charset="UTF-8">
+<title>Intro</title>
+<style>
+body{
+	margin:0px;
+	background:black;
+}
+#stage{
+	width:1250px;
+	height:900px;
+	background-image:url("./images/Intro.png");	
+}
+#start{
+	position:fixed;
+	margin-left:500px;
+	top:550px;
+	left:150px;
+	text-shadow:1px;
+	border-radius:5px;
+}
+</style>
+<script>
+var stage;
+var isPlaying=true;
+var start;
+
+window.addEventListener("load", function(){
+	stage=document.getElementById("stage");
+	start=document.getElementById("start")
+	start.addEventListener("click", function(){
+		
+
+		location.href="Dart Game.html";
+	});
+	
+	m_start();
+});
+
+
+function m_start(){
+	if(isPlaying){
+	document.getElementById("music").load();
+	document.getElementById("music").play();
+	}
+}
+</script>
+</head>
+<body>
+	<audio id="music">
+		<source id="dest" src="./sound/freedom.mp3" type="audio/mpeg">
+	</audio>
+	<div id="stage">
+		<input type="image" id="start" src="./images/play.png">
+	</div>
+</body>
+</html>
