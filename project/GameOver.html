@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>GameOver</title>
+<style>
+body{
+	margin:0px;
+	/*background:black;*/
+}
+#stage{
+	width:1250px;
+	height:900px;
+	background-image:url("./images/over.png");	
+	background-repeat:no-repeat;
+}
+#repeat{
+	width:30px;
+	height:30px;
+}
+</style>
+<script>
+var stage;
+var isPlaying=true;
+var repeat;
+
+window.addEventListener("load", function(){
+	stage=document.getElementById("stage");
+	start=document.getElementById("repeat")
+	start.addEventListener("click", function(){		
+
+		location.href="Intro.html";
+	});
+	
+	m_start();
+});
+
+
+function m_start(){
+	if(isPlaying){
+	document.getElementById("music").load();
+	document.getElementById("music").play();
+	}
+}
+
+</script>
+</head>
+<body>
+<audio id="music">
+		<source id="dest" src="./sound/oohhh.mp3" type="audio/mpeg">
+	</audio>
+	<div id="stage">
+		<input type="image" id="repeat" src="./images/repeat.png">
+	</div>
+</body>
+</html>

@@ -13,6 +13,7 @@ var Target=function(stage, width, height, x, y, src, last){
 	var me=this;
 	this.last=last;
 	this.stSpeed=8;
+	
 	this.init=function(){
 		
 	this.img=document.createElement("img");
