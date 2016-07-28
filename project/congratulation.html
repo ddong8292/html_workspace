@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>congratulation</title>
+<style>
+body{
+
+
+}
+#stage{
+	width:500px;
+	height:900px;
+	background-repeat:no-repeat;
+	left:300px;
+	position:absolute;
+}
+#repeat{
+	width:130px;
+	height:130px;
+	position:fixed;
+	margin-left:500px;
+	top:606px;
+	left:270px;
+	text-shadow:1px;
+	border-radius:5px;
+}
+</style>
+<script>
+var stage;
+var isPlaying=true;
+var repeat;
+var actionArray=["./images/women/1.png","./images/women/2.png","./images/women/3.png","./images/women/4.png","./images/women/5.png","./images/women/6.png","./images/women/7.png","./images/women/8.png","./images/women/9.png","./images/women/10.png","./images/women/11.png","./images/women/12.png","./images/women/13.png"];
+var speedCount=0;
+var running=true;
+var actionCount=0;
+var img1;
+var st;
+window.addEventListener("load", function(){
+	stage=document.getElementById("stage");
+	start=document.getElementById("repeat")
+	start.addEventListener("click", function(){		
+		location.href="Intro.html";
+	});
+	img1=document.createElement("img");
+	img1.style.width="643px";
+	img1.style.height="900px";
+	img1.src=actionArray[actionCount];
+	stage.appendChild(img1);
+	
+	m_start();
+	action();
+});
+
+function action(){
+	actionCount++;
+	img1.src=actionArray[actionCount];
+	st=setTimeout("action()",50);
+	if(actionCount>11)
+		clearTimeout(st);
+}
+
+
+function m_start(){
+	if(isPlaying){
+	document.getElementById("music").load();
+	document.getElementById("music").play();
+	}
+}
+
+</script>
+</head>
+<body>
+<audio id="music">
+		<source id="dest" src="./sound/end.mp3" type="audio/mpeg">
+	</audio>
+	<div id="stage">
+		<input type="image" id="repeat" src="./images/repeat.png">
+	</div>
+</body>
+</html>

@@ -25,15 +25,17 @@ var Point=function(stage, width, height,x,y,src){
 		this.stage.appendChild(this.img);
 		
 		this.move();
+		this.action();
 	}
 	this.action=function(){
 		if(this.running){
 			this.speedCount++;
 
-			if(this.speedCount%50==0){
+			if(this.speedCount%7==0){
 				actionCount++; 
 				if(actionCount > actionArray.length-1){
 					actionCount=0;
+					this.running=false;
 				}
 			}
 			this.img.src=actionArray[actionCount];
@@ -43,6 +45,7 @@ var Point=function(stage, width, height,x,y,src){
 	}
 
 	this.move=function(){
+		
 		var me=this;	
 		this.x+=this.velX;
 		if(this.x<=500){

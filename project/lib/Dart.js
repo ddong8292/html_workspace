@@ -14,6 +14,7 @@ var Dart=function(stage, width, height,x,y,src){
 	
 
 	this.init=function(){
+		
 	
 		this.img=document.createElement("img");
 		this.img.src=this.src;
@@ -22,17 +23,18 @@ var Dart=function(stage, width, height,x,y,src){
 		this.img.style.position="absolute";
 		this.img.style.left=this.x+"px";
 		this.img.style.top=this.y+"px";
-	
+		
 		this.stage.appendChild(this.img);
 		
 		this.move();
 	}
 	this.hitTest=function(){
 		for(var i=0; i<targetArray.length; i++){
-			
 			//타겟과 부딪치면
 			if(targetArray[i]!=undefined){			
+			
 			var result=hitTest(this.img, targetArray[i].img);
+
 			if(result){
 				//다트 없애기
 				hitCount++;
@@ -62,6 +64,7 @@ var Dart=function(stage, width, height,x,y,src){
 				this.stage.removeChild(targetArray[i].img);
 				clearTimeout(targetArray[i].st);
 				delete targetArray[i];
+				return;
 				}
 			}
 		}

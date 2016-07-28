@@ -41,6 +41,14 @@ body{
 	float:left;
 	
 }
+#stage_img{
+	width:500px;
+	height:450px;
+	position:absolute;
+	top:150px;
+	left: 400px;
+	display: none;
+}
 
 </style>
 
@@ -63,7 +71,7 @@ var r=parseInt(Math.random()*10); //몇번째 for문의 병을 특별한 병으로 할지를 결�
 var tr;
 var heart;
 var img2;
-var actionArray=["./images/11.png","./images/22.png","./images/33.png"];
+var actionArray=["./images/1.png","./images/2.png","./images/3.png","./images/4.png","./images/5.png","./images/6.png","./images/7.png"];
 var step=0;
 var actionCount=0;
 var key;
@@ -74,6 +82,8 @@ var targetCount=0;
 var stageCount=1;
 var st;
 var hitCount=0;
+var stage_img;
+var isPlaying=true;
 /*if(target.herat==true&&*dart.hit==10)*/
 window.addEventListener("load", function(){
 	init();
@@ -84,6 +94,9 @@ function init(){
 	target=document.getElementById("target");
 	hp=document.getElementById("hp");
 	tr=document.getElementById("tr");
+	stage_img=document.getElementById("stage_img");
+	document.getElementById("music").load();
+	document.getElementById("music").play();
 	
 	start();
 	point=new Point(stage, 100,100, 650,650,"./images/11.png");
@@ -94,7 +107,14 @@ function init(){
 function start(){
 	//document.write(parseInt(Math.random()*10));
 	if(stageCount==1){
-		$("#stage").fadeIn(2000);
+	document.getElementById("music2").load();
+	document.getElementById("music2").play();
+	
+		$("#stage").fadeIn(500, function(){
+			stage_img.src ="./images/st1.png";
+			$("#stage_img").fadeIn(2000).fadeOut(2000);
+		});
+		
 		for(var i=0; i<10; i++){
 			if(i==r){
 				tr=img[1]; //하트
@@ -109,8 +129,13 @@ function start(){
 			target.init();
 		}
 	}else if(stageCount==2){
+	document.getElementById("music2").load();
+	document.getElementById("music2").play();
 		stage.style.display = "none";
-		$("#stage").fadeIn(2000);
+		$("#stage").fadeIn(500, function(){
+			stage_img.src ="./images/st2.png";
+			$("#stage_img").fadeIn(2000).fadeOut(2000);
+		});
 		targetArray = [];
 		for(var i=0; i<10; i++){
 			if(i==r){
@@ -128,8 +153,14 @@ function start(){
 			targetCount=0;
 		}
 	}else if(stageCount==3){
+	document.getElementById("music2").load();
+	document.getElementById("music2").play();		
+	
 		stage.style.display = "none";
-		$("#stage").fadeIn(2000);
+		$("#stage").fadeIn(500, function(){
+			stage_img.src ="./images/st3.png";
+			$("#stage_img").fadeIn(2000).fadeOut(2000);
+		});
 		targetArray = [];
 		for(var i=0; i<10; i++){
 			if(i==r){
@@ -146,8 +177,36 @@ function start(){
 			targetCount=0;
 		}
 	}else if(stageCount==4){
+	document.getElementById("music2").load();
+	document.getElementById("music2").play();		
 		stage.style.display = "none";
-		$("#stage").fadeIn(2000);
+		$("#stage").fadeIn(500, function(){
+			stage_img.src ="./images/st4.png";
+			$("#stage_img").fadeIn(2000).fadeOut(2000);
+		});
+		targetArray = [];
+		for(var i=0; i<10; i++){
+			if(i==r){
+				tr=img[1]; //하트
+			}else{
+				tr=img[0]; //일반타겟
+			}
+			target=new Target(stage, 70, 70, 1000-(i*90), 50, tr);
+			target.stSpeed=5;
+			targetArray.push(target);
+			target.init();
+		
+			dartCount=0;
+			targetCount=0;
+		}
+	}else if(stageCount==5){
+	document.getElementById("music2").load();
+	document.getElementById("music2").play();		
+		stage.style.display = "none";
+		$("#stage").fadeIn(500, function(){
+			stage_img.src ="./images/st5.png";
+			$("#stage_img").fadeIn(2000).fadeOut(2000);
+		});
 		targetArray = [];
 		for(var i=0; i<10; i++){
 			if(i==r){
@@ -162,28 +221,11 @@ function start(){
 		
 			dartCount=0;
 			targetCount=0;
-		}
-	}else if(stageCount==5){
-		stage.style.display = "none";
-		$("#stage").fadeIn(2000);
-		targetArray = [];
-		for(var i=0; i<10; i++){
-			if(i==r){
-				tr=img[1]; //하트
-			}else{
-				tr=img[0]; //일반타겟
-			}
-			target=new Target(stage, 70, 70, 1000-(i*90), 50, tr);
-			target.stSpeed=2;
-			targetArray.push(target);
-			target.init();
-		
-			dartCount=0;
-			targetCount=0;
 	}
 
 	}else{
-
+		$("#stage").fadeIn(2000);
+		location.href="congratulation.html";
 	}
 }
 function createHp(){
@@ -224,11 +266,12 @@ window.addEventListener("keyup", function(){
 
 });
 function shot(){
+		
 	
-	point.running=true;
 
 		if(fireFlag){
-			dart=new Dart(stage, 20, 80,point.x+10,point.y-30,"./images/dart.png");
+			dart=new Dart(stage, 20, 80,point.x+20,point.y-30,"./images/dart.png");
+			point.running=true;
 			dart.init();
 		}
 		fireFlag=false;	
@@ -263,8 +306,15 @@ function level(){
 </script>
 </head>
 <body>
+	<audio id="music">
+		<source id="dest" src="./sound/jazz.mp3" type="audio/mpeg">
+	</audio>
+	<audio id="music2">
+		<source id="dest" src="./sound/call.mp3" type="audio/mpeg">
+	</audio>
 	<div id="wrapper">
 		<div id="stage">
+			<img id="stage_img">
 			<div id="top"></div>
 			<div id="bottom">
 				<div id="info"></div>

@@ -42,6 +42,7 @@ var Target=function(stage, width, height, x, y, src, last){
 
 		if(this.x==100||this.x>=1150){
 			this.flag=!this.flag
+
 		}
 		this.img.style.left=this.x+"px";
 		this.img.style.top=this.y+"px";
